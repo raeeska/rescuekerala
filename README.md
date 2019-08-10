@@ -2,7 +2,7 @@
 
 [![Build Status - Travis][0]][1] [![Open Source Helpers](https://www.codetriage.com/ieeekeralasection/rescuekerala/badges/users.svg)](https://www.codetriage.com/ieeekeralasection/rescuekerala)
 
-<p align="center">The Website for co-ordinating the rehabilitation of the people affected in the 2018 Kerala Floods.</p>
+<p align="center">The Website for co-ordinating the rehabilitation of the people affected in the Kerala Floods.</p>
 
 [![Join Kerala Rescue Slack channel](https://i.imgur.com/V7jxjak.png)](http://bit.ly/Keralarescuechat)
 
@@ -30,38 +30,7 @@
 [^top](#table-of-contents)
 
 #### Docker
-<details>
-<summary>
-These instructions will get you a copy of the Docker project up and running on your local machine for development and testing purposes.
-</summary>
-
-### Using Docker
-
-- Only pre-requisite is having docker and docker-compose installed
-- Execute `sh docker.sh` in this directory (if you do not have permissions on the `docker.sh`, do `chmod +x docker.sh`)
-- Server will start running at `localhost:8000`
-- `Ctrl+C` to stop
-
-#### Troubleshooting Docker
-* Incompatible docker version
-
- > ERROR: Version in "./docker-compose.yaml" is unsupported. You might be seeing this error because you're using the wrong Compose file version. Either specify a version of "2" (or "2.0") and place your service definitions under the `services` key, or omit the `version` key and place your service definitions at the root of the file to use version 1.
-For more on the Compose file format versions, see https://docs.docker.com/compose/compose-file/
-
-
-**Fix**
-
-Update your docker toolkit
-
-* Insufficient permissions
-> ERROR: Couldn't connect to Docker daemon at http+docker://localunixsocket - is it running?
-If it's at a non-standard location, specify the URL with the DOCKER_HOST environment variable.
-
-
-**Fix**
-
-Run it with sudo - `sudo sh docker.sh`
-</details>
+- Check out this [Wiki](https://github.com/IEEEKeralaSection/rescuekerala/wiki/Using-Docker) to see how to run docker for this project.
 
 #### [Python 3](https://www.python.org/downloads/)
 
@@ -120,9 +89,13 @@ https://github.com/vigneshhari/keralarescue_test_settings for local testing.
 
 <details>
 <summary>4. Install dependencies.</summary>
+    
+```
+pip3 install -r requirements_debug.txt
+```
 
-        pip3 install -r requirements.txt
-        pip3 install -r requirements_debug.txt
+
+    
 </details>
 
 <details>
@@ -218,6 +191,8 @@ You can help us with verifying user submitted request from our [Ushahidi volunte
 #### Contribution Guidelines
 Check out this [Wiki](https://github.com/IEEEKeralaSection/rescuekerala/wiki/Contribution-Guidelines) for our contribution guidelines.
 
+Please find issues that we need help [here](https://github.com/IEEEKeralaSection/rescuekerala/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22). Go through the comments in the issue to check if someone else is already working on it. Don't forget to drop a comment when you start working on it.
+
 
 <details>
 <summary>Testing PRs
@@ -281,3 +256,6 @@ has the bug number in the branch name.
 </details>
 
 <hr>
+
+### Flood Map
+You can find the repo for the Flood Map here : https://github.com/aswinmohanme/kerala-flood-map

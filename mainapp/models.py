@@ -132,8 +132,7 @@ class Request(models.Model):
     latlng_accuracy = models.CharField(max_length=100, verbose_name='GPS Accuracy - GPS കൃത്യത ', blank=True)
     #  If it is enabled no need to consider lat and lng
     is_request_for_others = models.BooleanField(
-        verbose_name='Requesting for others - മറ്റൊരാൾക്ക് വേണ്ടി അപേക്ഷിക്കുന്നു  ', default=False,
-        help_text="If this is checked, enter other's location from the \'Enter location manually\' button at the bottom")
+        verbose_name='Requesting for others - മറ്റൊരാൾക്ക് വേണ്ടി അപേക്ഷിക്കുന്നു ', default=False)
 
     needwater = models.BooleanField(verbose_name='Water - വെള്ളം')
     needfood = models.BooleanField(verbose_name='Food - ഭക്ഷണം')
@@ -174,6 +173,8 @@ class Request(models.Model):
             out += "\nToilet Requirements :\n {}".format(self.detailtoilet)
         if(self.needkit_util):
             out += "\nKit Requirements :\n {}".format(self.detailkit_util)
+        if(self.needrescue):
+            out += "\nRescue Action :\n {}".format(self.detailrescue)    
         if(len(self.needothers.strip()) != 0):
             out += "\nOther Needs :\n {}".format(self.needothers)
         return out
@@ -450,8 +451,8 @@ class PrivateRescueCamp(models.Model):
 
 
 class Person(models.Model):
-    name = models.CharField(max_length=30,blank=False,null=False,verbose_name="Name - പേര്")
-    phone = models.CharField(max_length=11,null=True,blank=True,verbose_name='Mobile - മൊബൈൽ')
+    name = models.CharField(max_length=51,blank=False,null=False,verbose_name="Name - പേര്")
+    phone = models.CharField(max_length=14,null=True,blank=True,verbose_name='Mobile - മൊബൈൽ')
     age = models.IntegerField(null=True,blank=True,verbose_name="Age - പ്രായം")
     gender = models.IntegerField(
         choices = gender,
@@ -673,3 +674,16 @@ class CsvBulkUpload(models.Model):
 
     def __str__(self):
         return self.name
+
+class Hospital(models.Model):
+    name = models.CharField(max_length=200)
+    officer = models.CharField(max_length=100)
+    designation = models.CharField(max_length=250, verbose_name="Officer name")
+    phone_number_regex = RegexValidator(regex='^((\+91|91|0)[\- ]{0,1})?[456789]\d{9}$', message='Please Enter 10/11 digit mobile number or landline as 0<std code><phone number>', code='invalid_mobile')
+    landline = models.CharField(max_length=14, validators=[phone_number_regex])
+    mobile = models.CharField(max_length=14, validators=[phone_number_regex])
+    email = models.EmailField()
+
+    def __str__(self):
+        return self.name + ' - ' + self.designation
+    

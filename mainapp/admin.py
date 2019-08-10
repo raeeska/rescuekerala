@@ -9,7 +9,8 @@ from django.http import StreamingHttpResponse
 from mainapp.redis_queue import bulk_csv_upload_queue
 from mainapp.csvimporter import import_inmate_file
 from .models import Request, Volunteer, Contributor, DistrictNeed, DistrictCollection, DistrictManager, vol_categories, \
-    RescueCamp, Person, NGO, Announcements, DataCollection , PrivateRescueCamp , CollectionCenter, CsvBulkUpload, RequestUpdate
+    RescueCamp, Person, NGO, Announcements, DataCollection , PrivateRescueCamp , CollectionCenter, CsvBulkUpload, RequestUpdate, \
+    Hospital
 
 """
 Helper function for streaming csv downloads
@@ -65,14 +66,17 @@ class RequestAdmin(admin.ModelAdmin):
     list_filter = ('district', 'status','dateadded')
 
     def mark_as_completed(self, request, queryset):
+        self.message_user(request, "Marked selected requests as completed.")
         queryset.update(status='sup')
         return
 
     def mark_as_new(self, request, queryset):
+        self.message_user(request, "Marked selected requests as new.")
         queryset.update(status='new')
         return
 
     def mark_as_ongoing(self, request, queryset):
+        self.message_user(request, "Marked selected requests as ongoing.")
         queryset.update(status='pro')
         return
 
@@ -214,6 +218,7 @@ class PersonAdmin(admin.ModelAdmin):
     list_display = ('name', 'camped_at', 'added_at', 'phone', 'age', 'gender', 'camped_at_district', 'camped_at_taluk')
     ordering = ('-added_at',)
     list_filter = ('camped_at__district', 'camped_at__taluk')
+    search_fields = ['camped_at__district', 'camped_at__name', 'name']
 
     def camped_at_taluk(self, instance):
         return instance.camped_at.taluk
@@ -252,7 +257,8 @@ class CsvBulkUploadAdmin(admin.ModelAdmin):
         )
     autocomplete_fields = ['camp']
     readonly_fields = ['is_completed', 'failure_reason']
-    list_display = ['name','camp','is_completed']
+    list_display = ['name', 'camp', 'is_completed']
+    search_fields = ['camp__name']
 
 admin.site.register(Request, RequestAdmin)
 admin.site.register(Volunteer, VolunteerAdmin)
@@ -267,5 +273,4 @@ admin.site.register(NGO, NGOAdmin)
 admin.site.register(Announcements, AnnouncementAdmin)
 admin.site.register(Person, PersonAdmin)
 admin.site.register(DataCollection, DataCollectionAdmin)
-admin.site.register(CsvBulkUpload, CsvBulkUploadAdmin)
-admin.site.register(RequestUpdate, RequestUpdateAdmin)
+admin.site.register(Hospital)

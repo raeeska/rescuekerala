@@ -36,7 +36,7 @@ urlpatterns = [
     path('pcampdet/' , views.pcampdetails , name="privatecampdetails"),
     path('privatecc/' , views.privatecc , name="privatedetails"),
     # path('data/' , views.data , name="data"),
-    path('map/' , views.mapview , name="mapview"),
+    path('map/' , views.mapview , name="map"),
     path('dmodash/' , views.dmodash , name="DMODash"),
     path('dmoinfo/' , views.dmoinfo , name="DMOInfo" ),
     path('dmocsv/' , views.dmocsv , name="DMOCSV" ),
@@ -62,4 +62,5 @@ urlpatterns = [
     path('consent_success/', views.ConsentSuccess.as_view(), name='consent_success'),
     url(r'c/(?P<pk>\d+)/(?P<ts>\d+)/$', views.VolunteerConsent.as_view(), name='volunteer_consent'),
     url('missing_and_finding_persons/', views.ReportFindPerson.as_view(), name='report_find_person'),
+    url('hospitals/', views.HospitalView.as_view(), name='hospitals')
 ]

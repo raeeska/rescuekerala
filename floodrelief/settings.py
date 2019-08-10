@@ -72,7 +72,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
-    'ddtrace.contrib.django',
 ]
 
 if DEBUG:
@@ -94,7 +93,7 @@ if DEBUG:
     MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
 
 DEBUG_TOOLBAR_PANELS = [
-    'debug_toolbar.panels.timer.TimerDebugPanel',
+    'debug_toolbar.panels.timer.TimerPanel',
     'pympler.panels.MemoryPanel',
     'debug_toolbar.panels.versions.VersionsPanel',
     'debug_toolbar.panels.settings.SettingsPanel',
@@ -230,7 +229,7 @@ bucket_name = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 S3_URL = "https://{}.s3.ap-south-1.amazonaws.com".format(bucket_name,)
 
 
-if os.environ.get('USE_S3'):
+if os.environ.get('USE_S3','').lower() == "true" :
     AWS_STORAGE_BUCKET_NAME=bucket_name
     AWS_ACCESS_KEY_ID=os.environ.get("AWS_ACCESS_KEY_ID")
     AWS_SECRET_ACCESS_KEY=os.environ.get("AWS_SECRET_ACCESS_KEY")
